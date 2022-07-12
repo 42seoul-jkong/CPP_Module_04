@@ -2,6 +2,7 @@
  * https://creativecommons.org/publicdomain/zero/1.0/ */
 
 #include "MateriaSource.hpp"
+#include "util.h"
 #include <iostream>
 
 MateriaSource::MateriaSource()
@@ -9,7 +10,7 @@ MateriaSource::MateriaSource()
 #ifdef VERBOSE
     std::cout << "MateriaSource Default constructor called" << std::endl;
 #endif
-    for (std::size_t i = 0; i < SLOT_LIMIT; i++)
+    for (std::size_t i = 0; i < _countof(this->slot); i++)
     {
         this->slot[i] = NULL;
     }
@@ -20,7 +21,7 @@ MateriaSource::MateriaSource(const MateriaSource& that)
 #ifdef VERBOSE
     std::cout << "MateriaSource Copy constructor called" << std::endl;
 #endif
-    for (std::size_t i = 0; i < SLOT_LIMIT; i++)
+    for (std::size_t i = 0; i < _countof(this->slot); i++)
     {
         if (that.slot[i])
         {
@@ -40,14 +41,14 @@ MateriaSource& MateriaSource::operator=(const MateriaSource& that)
 #endif
     MateriaSource tmp;
     // Begin std::swap(this->slot, tmp.slot);
-    for (std::size_t i = 0; i < SLOT_LIMIT; i++)
+    for (std::size_t i = 0; i < _countof(this->slot); i++)
     {
         AMateria* e = this->slot[i];
         this->slot[i] = tmp.slot[i];
         tmp.slot[i] = e;
     }
     // End
-    for (std::size_t i = 0; i < SLOT_LIMIT; i++)
+    for (std::size_t i = 0; i < _countof(this->slot); i++)
     {
         if (that.slot[i])
         {
@@ -62,7 +63,7 @@ MateriaSource::~MateriaSource()
 #ifdef VERBOSE
     std::cout << "MateriaSource Destructor called" << std::endl;
 #endif
-    for (std::size_t i = 0; i < SLOT_LIMIT; i++)
+    for (std::size_t i = 0; i < _countof(this->slot); i++)
     {
         delete this->slot[i];
     }
@@ -70,7 +71,7 @@ MateriaSource::~MateriaSource()
 
 void MateriaSource::learnMateria(AMateria* m)
 {
-    for (std::size_t i = 0; i < SLOT_LIMIT; i++)
+    for (std::size_t i = 0; i < _countof(this->slot); i++)
     {
         if (!this->slot[i])
         {
@@ -83,7 +84,7 @@ void MateriaSource::learnMateria(AMateria* m)
 
 AMateria* MateriaSource::createMateria(const std::string& type)
 {
-    for (std::size_t i = 0; i < SLOT_LIMIT; i++)
+    for (std::size_t i = 0; i < _countof(this->slot); i++)
     {
         if (this->slot[i] && this->slot[i]->getType() == type)
         {

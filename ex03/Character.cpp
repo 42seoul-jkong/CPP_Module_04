@@ -3,6 +3,7 @@
 
 #include "Character.hpp"
 #include "AMateria.hpp"
+#include "util.h"
 #include <iostream>
 
 Character::Character(const std::string& name)
@@ -11,7 +12,7 @@ Character::Character(const std::string& name)
 #ifdef VERBOSE
     std::cout << "Character Default constructor called" << std::endl;
 #endif
-    for (std::size_t i = 0; i < INVENTORY_LIMIT; i++)
+    for (std::size_t i = 0; i < _countof(this->inventory); i++)
     {
         this->inventory[i] = NULL;
     }
@@ -23,7 +24,7 @@ Character::Character(const Character& that)
 #ifdef VERBOSE
     std::cout << "Character Copy constructor called" << std::endl;
 #endif
-    for (std::size_t i = 0; i < INVENTORY_LIMIT; i++)
+    for (std::size_t i = 0; i < _countof(this->inventory); i++)
     {
         if (that.inventory[i])
         {
@@ -46,14 +47,14 @@ Character& Character::operator=(const Character& that)
         const_cast<std::string&>(this->name) = that.name;
         Character tmp;
         // Begin std::swap(this->inventory, tmp.inventory);
-        for (std::size_t i = 0; i < INVENTORY_LIMIT; i++)
+        for (std::size_t i = 0; i < _countof(this->inventory); i++)
         {
             AMateria* e = this->inventory[i];
             this->inventory[i] = tmp.inventory[i];
             tmp.inventory[i] = e;
         }
         // End
-        for (std::size_t i = 0; i < INVENTORY_LIMIT; i++)
+        for (std::size_t i = 0; i < _countof(this->inventory); i++)
         {
             if (that.inventory[i])
             {
@@ -69,7 +70,7 @@ Character::~Character()
 #ifdef VERBOSE
     std::cout << "Character Destructor called" << std::endl;
 #endif
-    for (std::size_t i = 0; i < INVENTORY_LIMIT; i++)
+    for (std::size_t i = 0; i < _countof(this->inventory); i++)
     {
         delete this->inventory[i];
     }
@@ -82,7 +83,7 @@ const std::string& Character::getName() const
 
 void Character::equip(AMateria* m)
 {
-    for (std::size_t i = 0; i < INVENTORY_LIMIT; i++)
+    for (std::size_t i = 0; i < _countof(this->inventory); i++)
     {
         if (!this->inventory[i])
         {
@@ -95,7 +96,7 @@ void Character::equip(AMateria* m)
 
 void Character::unequip(int idx)
 {
-    if (idx < 0 || idx >= INVENTORY_LIMIT)
+    if (idx < 0 || idx >= _countof_i(this->inventory))
     {
         // No-OP
         return;
@@ -105,7 +106,7 @@ void Character::unequip(int idx)
 
 void Character::use(int idx, ICharacter& target)
 {
-    if (idx < 0 || idx >= INVENTORY_LIMIT)
+    if (idx < 0 || idx >= _countof_i(this->inventory))
     {
         // No-OP
         return;
