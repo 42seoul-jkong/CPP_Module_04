@@ -17,7 +17,7 @@ ifndef SRCS
 endif
 OBJS = $(addprefix $(OBJECTS_DIR), $(SRCS:.cpp=.o))
 
-CXX_SANITIZER_FLAGS = #address undefined
+CXX_SANITIZER_FLAGS = address undefined
 CXXFLAGS += $(addprefix -fsanitize=, $(CXX_SANITIZER_FLAGS))
 LDFLAGS += $(addprefix -fsanitize=, $(CXX_SANITIZER_FLAGS))
 

@@ -5,7 +5,6 @@
 #include "Cat.hpp"
 #include "Dog.hpp"
 #include <iostream>
-#include <unistd.h>
 
 int main()
 {
@@ -48,6 +47,5 @@ int main()
     Cat cat1 = Cat();
     Cat cat2(cat1);
 
-    system("leaks animals.out");
     return 0;
 }
